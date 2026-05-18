@@ -1,0 +1,122 @@
+name: Generate CrowdStrike Excel Model
+on:
+  workflow_dispatch: # Allows you to trigger this manually with a button click
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-style: '3.10'
+
+    - name: Install dependencies
+      run: pip install openpyxl
+
+    - name: Create Excel Generation Script
+      run: |
+        cat << 'EOF' > generate_model.py
+        import openpyxl
+        from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+        from openpyxl.utils import get_column_letter
+
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Scenario Model"
+        ws.views.sheetView[0].showGridLines = True
+
+        NAVY_HEADER, WHITE, LIGHT_BLUE, ZEBRA_TINT, BORDER_GRAY = "1F497D", "FFFFFF", "DCE6F1", "F2F5F8", "D9D9D9"
+        font_title = Font(name="Calibri", size=16, bold=True, color=NAVY_HEADER)
+        font_subtitle = Font(name="Calibri", size=11, italic=True, color="595959")
+        font_header = Font(name="Calibri", size=11, bold=True, color=WHITE)
+        font_bold = Font(name="Calibri", size=11, bold=True)
+        font_regular = Font(name="Calibri", size=11)
+
+        fill_header = PatternFill(start_color=NAVY_HEADER, end_color=NAVY_HEADER, fill_type="solid")
+        fill_summary = PatternFill(start_color=LIGHT_BLUE, end_color=LIGHT_BLUE, fill_type="solid")
+        fill_zebra = PatternFill(start_color=ZEBRA_TINT, end_color=ZEBRA_TINT, fill_type="solid")
+
+        thin_side = Side(border_style="thin", color=BORDER_GRAY)
+        double_side = Side(border_style="double", color="000000")
+        border_all = Border(left=thin_side, right=thin_side, top=thin_side, bottom=thin_side)
+        top_thin_bottom_double = Border(top=thin_side, bottom=double_side)
+
+        ws["A1"] = "CrowdStrike Holdings, Inc. (NASDAQ: CRWD)"
+        ws["A1"].font = font_title
+        ws["A2"] = "Event-Driven Valuation & Outage Stress-Test Model (Post-July 2024)"
+        ws["A2"].font = font_subtitle
+
+        headers = ["Financial Metric / Input", "Optimistic Recovery", "Base Case (Disruption)", "Severe Downside / Floor"]
+        for col_idx, text in enumerate(headers, start=1):
+            cell = ws.cell(row=5, column=col_idx, value=text)
+            cell.font = font_header
+            cell.fill = fill_header
+            cell.alignment = Alignment(horizontal="center" if col_idx > 1 else "left", vertical="center")
+            cell.border = border_all
+        ws.row_dimensions[5].height = 26
+
+        data_structure = [
+            ("Baseline Annual Recurring Revenue (ARR)", "$#,##0", 3380000000),
+            ("ARR Growth Rate", "0.0%", [0.22, 0.14, 0.05]),
+            ("Projected Year 1 ARR", "$#,##0", None),
+            ("Stressed FCF Margin", "0.0%", [0.28, 0.22, 0.14]),
+            ("Implied Free Cash Flow (FCF)", "$#,##0", None),
+            ("Target FCF Multiple", '0"x"', [30, 26, 22]),
+            ("Implied Enterprise Value (EV)", "$#,##0", None),
+            ("Shares Outstanding", "#,##0", 243000000),
+            ("Implied Floor Price Per Share", "$#,##0.00", None)
+        ]
+
+        start_row = 6
+        for idx, (label, num_format, val) in enumerate(data_structure):
+            current_row = start_row + idx
+            lbl_cell = ws.cell(row=current_row, column=1, value=label)
+            lbl_cell.font = font_bold if idx in [2, 4, 6, 8] else font_regular
+            lbl_cell.border = border_all
+            if idx % 2 == 1 and idx != 8: lbl_cell.fill = fill_zebra
+
+            for col_idx, col_letter in enumerate(["B", "C", "D"]):
+                cell = ws.cell(row=current_row, column=col_idx + 2)
+                cell.number_format = num_format
+                cell.alignment = Alignment(horizontal="right")
+                cell.border = border_all
+                if idx % 2 == 1 and idx != 8: cell.fill = fill_zebra
+
+                if label in ["Baseline Annual Recurring Revenue (ARR)", "Shares Outstanding"]:
+                    cell.value = val
+                elif label in ["ARR Growth Rate", "Stressed FCF Margin", "Target FCF Multiple"]:
+                    cell.value = val[col_idx]
+                elif label == "Projected Year 1 ARR":
+                    cell.value = f"={col_letter}6*(1+{col_letter}7)"
+                    cell.font = font_bold
+                elif label == "Implied Free Cash Flow (FCF)":
+                    cell.value = f"={col_letter}8*{col_letter}9"
+                    cell.font = font_bold
+                elif label == "Implied Enterprise Value (EV)":
+                    cell.value = f"={col_letter}10*{col_letter}11"
+                    cell.font = font_bold
+                elif label == "Implied Floor Price Per Share":
+                    cell.value = f"={col_letter}12/{col_letter}13"
+                    cell.font = font_bold
+                    cell.fill = fill_summary
+                    cell.border = top_thin_bottom_double
+            ws.row_dimensions[current_row].height = 20
+
+        ws.column_dimensions["A"].width = 42
+        for col_letter in ["B", "C", "D"]: ws.column_dimensions[col_letter].width = 24
+
+        wb.save("CrowdStrike-Risk-Model/CrowdStrike_Outage_Stress_Test.xlsx")
+        EOF
+        python generate_model.py
+
+    - name: Commit and Push generated file
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add CrowdStrike-Risk-Model/CrowdStrike_Outage_Stress_Test.xlsx
+        git commit -m "Auto-generate corporate styled CrowdStrike LBO/Stress Test model file" || echo "No changes to commit"
+        git push
