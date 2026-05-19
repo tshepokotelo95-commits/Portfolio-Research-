@@ -1,0 +1,10 @@
+Financial Metric / Input,Optimistic Recovery,Base Case (Disruption),Severe Downside / Floor
+Baseline Annual Recurring Revenue (ARR),3380000000,3380000000,3380000000
+ARR Growth Rate,0.22,0.14,0.05
+Projected Year 1 ARR,=B2*(1+B3),=C2*(1+C3),=D2*(1+D3)
+Stressed FCF Margin,0.28,0.22,0.14
+Implied Free Cash Flow (FCF),=B4*B5,=C4*C5,=D4*D5
+Target FCF Multiple,30,26,22
+Implied Enterprise Value (EV),=B6*B7,=C6*C7,=D6*D7
+Shares Outstanding,243000000,243000000,243000000
+Implied Floor Price Per Share,=B8/B9,=C8/C9,=D8/D9
