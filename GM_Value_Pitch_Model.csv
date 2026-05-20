@@ -1,0 +1,8 @@
+Financial Metric / Input,Value / Projection
+Current Share Price (USD),74.86
+FY2026 Expected Free Cash Flow (USD),10000000000
+Common Shares Outstanding,9020000000
+Implied Free Cash Flow Per Share,=B2/B3
+Current Trailing FCF Yield,=B4/B1
+Target Re-rated FCF Multiple,10.00
+Implied Target Share Price (USD),=B4*B6
