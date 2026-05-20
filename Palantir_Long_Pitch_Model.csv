@@ -1,0 +1,8 @@
+Financial Metric / Input,Value / Projection
+Current Share Price (USD),135.26
+FY2026 Expected Revenue (USD),7656000000
+Adjusted Free Cash Flow Margin,0.57
+Projected FY2026 FCF (USD),=B2*B3
+Shares Outstanding,2570000000
+Implied Forward FCF Per Share,=B4/B5
+Current Forward FCF Multiple,=B1/B6
