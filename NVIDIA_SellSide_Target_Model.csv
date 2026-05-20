@@ -1,0 +1,6 @@
+Financial Metric / Input,Bear Case,Base Case,Bull Case
+Projected 12-Month Net Income (USD),90000000000,140000000000,180000000000
+Shares Outstanding,24220000000,24220000000,24220000000
+Projected Forward EPS,=B2/B3,=C2/C3,=D2/D3
+Target Forward P/E Multiple,20,30,38
+Implied 12-Month Target Price,=B4*B5,=C4*C5,=D4*D5
