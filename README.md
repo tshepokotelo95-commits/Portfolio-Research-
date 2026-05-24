@@ -55,3 +55,22 @@ The tool executes a Monte Carlo simulation across a diversified asset class bask
 ### Execution Parameters:
 * **Asset Universe:** Proxy basket tracking Global Equities (SPY), Long-Term Treasuries (TLT), Gold (GLD), and Commodities (DBC).
 * **Simulation Mechanics:** Generates 10,000 randomized, normalized weight vectors to determine long-only allocations.
+
+
+---
+
+## 5. Production Scaling & Local Execution
+
+### 💡 API Data Sourcing Note
+While this demonstration utilizes a static, annualized baseline covariance matrix for execution consistency, the underlying architecture is designed to ingest dynamic historical price feeds. In a live production environment, the engine can be integrated directly with institutional data endpoints (e.g., Bloomberg B-PIPE, Reuters Eikon, or wrappers like `yfinance`) to recalculate rolling covariance parameters in real-time.
+
+### 💻 Quick Start & Dependencies
+To clone this repository and execute the optimization model locally, run the following commands in your terminal:
+<code>
+git clone https://github.com/Tshepo-Stefan/Portfolio-Research.git
+cd Portfolio-Research
+pip install numpy
+python portfolio_optimizer.py
+</code>
+
+
