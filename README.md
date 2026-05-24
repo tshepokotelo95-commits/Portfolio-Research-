@@ -38,3 +38,20 @@ All data sets, valuation matrix models, and qualitative investment memos are for
 1. **`.csv` Layouts:** Configured explicitly to auto-render as clean, scannable, two-column grid data tables natively inside GitHub interfaces.
 2. **`.md` Investment Notes:** Written utilizing standard investment banking/hedge fund nomenclature—focusing entirely on variant perception, execution catalysts, and margin of safety verification.
 
+
+---
+
+## 4. Complementary Optimization Tools (portfolio_optimizer.py)
+
+In addition to the active asset pitches above, this repository includes an institutional-grade asset allocation framework built in Python utilizing Modern Portfolio Theory (MPT). 
+
+The tool executes a Monte Carlo simulation across a diversified asset class basket to map out the Efficient Frontier and isolate the optimal allocation weights that maximize the portfolio's Sharpe Ratio.
+
+### Core Portfolio Mechanics:
+* **Expected Return:** Calculates the weighted sum of expected asset returns across the matrix.
+* **Portfolio Volatility:** Captures total systemic risk using the structural asset covariance matrix to measure co-movements.
+* **Sharpe Ratio Maximization:** Optimizes risk-adjusted excess returns over a baseline risk-free rate.
+
+### Execution Parameters:
+* **Asset Universe:** Proxy basket tracking Global Equities (SPY), Long-Term Treasuries (TLT), Gold (GLD), and Commodities (DBC).
+* **Simulation Mechanics:** Generates 10,000 randomized, normalized weight vectors to determine long-only allocations.
