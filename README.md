@@ -1,8 +1,12 @@
 # Quantitative Risk & Multi-Sector Equity Research Portfolio
 
-![CI Status](https://img.shields.io/badge/build-passing-brightgreen)
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
+[![Portfolio Research CI](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/tshepokotelo95-commits/Portfolio-Research-)
+[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Central repository for quantitative and fundamental equity research. Features a hybrid GARCH-LSTM volatility engine for time-series forecasting and an institutional-grade stock pitch for Nasdaq, Inc. (NDAQ) focused on SaaS-driven recurring revenue models and M&A synergy analysis.
+
+---
 
 ## Executive Overview
 
@@ -14,7 +18,7 @@ The underlying assets span multiple uncorrelated sectors, demonstrating an advan
 
 ## 1. Quantitative Modeling & Volatility Infrastructure
 
-* **Core Framework:** Advanced macro-scenario stress testing and daily implied volatility forecasting architecture.
+* **Core Framework:** Advanced macro scenario stress testing and daily implied volatility forecasting architecture.
 * **Objective:** Engineering dynamic systematic parameters to evaluate capital downside under high-VIX regimes, extreme macroeconomic shocks, and structural shifts in implied variance.
 * **Core Methodologies:** Hybrid GARCH(1,1) implementations, time-series data alignment, and forward-looking variance modeling to map out multi-scenario portfolio drawdowns.
 
@@ -39,19 +43,27 @@ The underlying assets span multiple uncorrelated sectors, demonstrating an advan
 ## 3. Corporate Finance & M&A Modeling
 
 * **CrowdStrike Outstress Test Model (`CrowdStrike-Risk-Model/`):** Quantifies operational downtime impact, customer churn elasticity, and balance sheet resilience following systemic infrastructure outages.
-* **JPMorgan / Adven Merger Model (`JPM-Adven-Merger-Model/`):** End-to-end pro-forma M&A accretion/dilution analysis, synergies valuation, and debt financing structure optimization.
+* **JPMorgan / Adyen Merger Model (`JPM-Adyen-Merger-Model/`):** End-to-end pro-forma M&A accretion/dilution analysis, synergies valuation, and debt financing structure optimization.
 
 ---
 
-## 🚀 Quickstart
+## System Architecture & Data Flow
 
-```bash
-# Clone repository
-git clone [https://github.com/tshepokotelo95-commits/Portfolio-Research.git](https://github.com/tshepokotelo95-commits/Portfolio-Research.git)
-cd Portfolio-Research
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run portfolio optimization engine
-python src/portfolio_optimizer.py
+```text
++-----------------------------------------------------------------------------------+
+|                        MULTI-ASSET & MACRO DATA STREAMS                           |
+|            (Market Prices, Financial Statements, & Volatility Feeds)              |
++-----------------------------------------------------------------------------------+
+                                          |
+                                          v
++-----------------------------------------------------------------------------------+
+|                        QUANTITATIVE & M&A MODELING ENGINE                         |
+|  * Hybrid GARCH-LSTM Volatility Engine        * 3-Statement M&A Pro-Forma Solver  |
+|  * Monte Carlo & Scenario Stress Tests        * Portfolio Optimization Routine    |
++-----------------------------------------------------------------------------------+
+                                          |
+                                          v
++-----------------------------------------------------------------------------------+
+|                        CENTRAL RESEARCH & PITCH DASHBOARD                         |
+|           (Asymmetric Risk Profiles, Target Prices, & Capital Allocation)         |
++-----------------------------------------------------------------------------------+
